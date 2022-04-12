@@ -1,3 +1,4 @@
+/*Tipagem para o react-navigation */
 export type FormNavigationProps = {
   id?: string;
 };
