@@ -3,6 +3,8 @@ import { Container, Content, ContainerForm, ContainerScrollView, Footer } from '
 
 import { HeaderForm } from '../../components/HeaderForm';
 import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
+
 export function Form() {
   return (
     <Container>
@@ -11,7 +13,17 @@ export function Form() {
           <HeaderForm />
 
           <ContainerForm>
-            {/*inputs*/}
+            <Input
+              label="Nome do serviço"
+            />
+            <Input
+              label="E-mail ou usuário"
+              autoCapitalize="none"
+            />
+            <Input
+              label="Senha"
+              secureTextEntry
+            />
           </ContainerForm>
 
           <Footer>
