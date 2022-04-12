@@ -20,24 +20,32 @@ export function Form() {
 
   //função para pegar os dados dos inputs
   async function handleNew() {
-    const id = uuid.v4();
-    const newData = {
-      id,
-      name,
-      user,
-      password,
+    try {
+      const id = uuid.v4();
+      const newData = {
+        id,
+        name,
+        user,
+        password,
+      }
+
+      //guardar no async storage, converte o objeto para texto com o JSON
+      await AsyncStorage.setItem("@savepass:passwords", JSON.stringify(newData));
+
+      Toast.show({
+        type: "success",
+        text1: "Cadastrado com sucesso!"
+      })
+
+      console.log(newData);
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Não foi possível cadastrar."
+      })
     }
-
-    //guardar no async storage, converte o objeto para texto com o JSON
-    await AsyncStorage.setItem("@savepass:passwords", JSON.stringify(newData));
-
-    Toast.show({
-      type: "success",
-      text1: "Cadastrado com sucesso!"
-    })
-
-    console.log(newData);
   }
+
 
   return (
     <Container>
