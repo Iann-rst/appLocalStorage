@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import uuid from 'react-native-uuid';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 import Toast from 'react-native-toast-message';
 
@@ -18,6 +18,13 @@ export function Form() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
 
+  /*sintaxe de hook do próprio AsyncStorage 
+  *
+  * É a mesma coisa de usar: asyncStorage.getItem("@savepass:passwords"), 
+  * asyncStorage.setItem("@savepass:passwords")
+  */
+  const { getItem, setItem } = useAsyncStorage("@savepass:passwords");
+
   //função para pegar os dados dos inputs
   async function handleNew() {
     try {
@@ -26,12 +33,17 @@ export function Form() {
         id,
         name,
         user,
-        password,
+        password
       }
 
-      //guardar no async storage, converte o objeto para texto com o JSON
-      await AsyncStorage.setItem("@savepass:passwords", JSON.stringify(newData));
+      /*Busca tudo que ja tem no AsyncStorage para adicionar os dados que tem lá mais os novos dados */
+      const response = await getItem();
+      const previousData = response ? JSON.parse(response) : [];
 
+      const data = [...previousData, newData];
+
+      //guardar no async storage, converte o objeto para texto com o JSON
+      await setItem(JSON.stringify(data));
       Toast.show({
         type: "success",
         text1: "Cadastrado com sucesso!"
