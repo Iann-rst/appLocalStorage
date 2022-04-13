@@ -33,7 +33,7 @@ export function Card({ data, onPress }: Props) {
 
   return (
     <Container>
-      <ButtonVisible>
+      <ButtonVisible onPress={togglePasswordIsVisible}>
         <MaterialIcons
           name={passwordIsVisible ? "visibility" : "visibility-off"}
           size={22}
@@ -53,14 +53,15 @@ export function Card({ data, onPress }: Props) {
           }
         </View>
       </Content>
-      <ButtonDelete onPress={onPress}>
+      <ButtonDelete
+        onPress={onPress}
+      >
         <MaterialIcons
           name="delete"
           size={22}
           color="#888D97"
         />
       </ButtonDelete>
-
     </Container>
   )
 }
